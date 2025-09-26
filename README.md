@@ -37,25 +37,31 @@ make (Ferramenta de automação de build)
 Passo a Passo
 Clone o repositório (se aplicável):
 
-Bash
+''' Bash
 
 git clone <url-do-seu-repositorio>
 cd pagueveloz_challenge
+'''
 Compile e execute os testes:
 O Makefile foi configurado para compilar todos os arquivos necessários e rodar os testes com um único comando:
 
-Bash
+'''Bash
 
 make test
+'''
+
 Limpe os arquivos gerados:
 Para remover os arquivos compilados e limpar o projeto, use o comando:
 
-Bash
+'''Bash
 
 make clean
+'''
+
 Resultados Esperados
 Ao executar o comando make test, a seguinte saída deve ser exibida no terminal. Isso confirma que o módulo de validação de Luhn está funcionando corretamente para todos os casos de teste definidos.
 
+''' bash
 Executando testes para o Algoritmo de Luhn...
   [PASSOU] Numero valido (49927398716)
   [PASSOU] Numero invalido (49927398717)
@@ -63,6 +69,7 @@ Executando testes para o Algoritmo de Luhn...
   [PASSOU] String vazia
   [PASSOU] Ponteiro nulo
 Todos os testes de Luhn passaram com sucesso!
+'''
 
 Próximos Passos
 O plano para os próximos dias inclui o desenvolvimento dos seguintes módulos:
