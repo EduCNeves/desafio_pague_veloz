@@ -1,67 +1,67 @@
-Desafio Técnico - Desenvolvedor Backend C Embarcado (PagueVeloz)
+
+
+# Desafio Técnico - Desenvolvedor Backend C Embarcado (PagueVeloz)
+
 Este repositório contém a implementação do desafio técnico proposto pela PagueVeloz para a vaga de Desenvolvedor Backend C Embarcado. O objetivo é construir uma biblioteca em C que simula as funcionalidades essenciais de um terminal POS (Point of Sale).
 
-Status do Projeto: 🚧 Em andamento - Dia 1 de 7 concluído. 🚧
+**Status do Projeto:** 🚧 Em andamento - Dia 3 de 7 concluído. 🚧
 
-Funcionalidades Implementadas (Dia 1)
-Nesta primeira etapa, a base do projeto foi estabelecida e o primeiro módulo funcional foi entregue e testado.
+## Funcionalidades Implementadas (Dia 1)
 
-Estrutura do Projeto:
+  * **Estrutura do Projeto:** Organização de diretórios para código-fonte (`src`), cabeçalhos (`include`), testes (`tests`) e documentação (`docs`).
+  * **Módulo de Validação (Algoritmo de Luhn):** Implementada a função `bool luhn_validate(const char *pan)` para validar números de cartão.
+      * *Arquivos:* `src/luhn.c`, `include/luhn.h`.
 
-O projeto foi organizado em uma estrutura de diretórios clara para separar o código-fonte (src), os cabeçalhos (include), os testes (tests) e a documentação (docs).
+## Funcionalidades Implementadas (Dia 2)
 
-Módulo de Validação (Algoritmo de Luhn):
+  * **Módulo de Persistência (Memória Flash Simulada):** Um módulo para simular uma memória flash de 4 KB, abstraindo o acesso ao hardware.
+      * *Arquivos:* `src/flash_mem.c`, `include/flash_mem.h`.
+  * **Módulo de Log Seguro:** Utiliza o módulo de flash para gravar logs com mascaramento de PAN e cifragem XOR.
+      * *Arquivos:* `src/secure_log.c`, `include/secure_log.h`.
 
-Foi implementada a função bool luhn_validate(const char *pan).
+## Funcionalidades Implementadas (Dia 3)
 
-Objetivo: Validar números de identificação, como os de cartões de crédito, para detectar erros simples de digitação.
+  * **Módulo de Mensagens ISO 8583 (Builder):** Foi implementado o montador de mensagens ISO 8583. Este módulo converte os dados de uma transação (armazenados em uma `struct` C) para o formato de mensagem padrão, pronto para transmissão.
+      * **Geração de Bitmap:** A lógica para gerar o bitmap de 16 bytes (primário e secundário) foi implementada, indicando corretamente os campos presentes.
+      * **Empacotamento:** A função `iso8583_pack()` serializa o MTI, o bitmap e os campos de dados em um único buffer.
+      * *Arquivos:* `src/iso8583.c`, `include/iso8583.h`.
 
-Arquivos: src/luhn.c, include/luhn.h.
+## Testes Unitários
 
-Testes Unitários:
+O projeto possui um conjunto de testes automatizados para garantir a corretude de cada módulo.
 
-Um executável de teste dedicado (tests/test_luhn.c) foi criado para validar o módulo Luhn de forma isolada.
+  * **Testes de Luhn:** Valida o algoritmo de Luhn contra diversos casos.
+  * **Testes de Persistência:** Valida o fluxo de escrita/leitura na flash, mascaramento de PAN e cifragem.
+  * **Testes do Montador ISO 8583:** Um terceiro executável (`tests/test_iso8583.c`) foi adicionado para validar a correta montagem de uma mensagem de venda (0200).
 
-Os testes cobrem casos de sucesso (números válidos), casos de falha (números inválidos) e casos de borda (strings vazias, ponteiros nulos).
+## Como Compilar e Testar
 
-Sistema de Build (Makefile):
+### Pré-requisitos
 
-Um Makefile foi configurado para automatizar o processo de compilação e teste, tornando o desenvolvimento mais eficiente.
+  * `gcc` (Compilador C)
+  * `make` (Ferramenta de automação de build)
 
-Como Compilar e Testar
-Pré-requisitos
-gcc (Compilador C)
+### Passo a Passo
 
-make (Ferramenta de automação de build)
+1.  **Compile e execute os testes:**
+    O `Makefile` compila todos os módulos e roda o conjunto completo de testes com um único comando:
 
-Passo a Passo
-Clone o repositório (se aplicável):
+    ```bash
+    make test
+    ```
 
-``` bash
+2.  **Limpe os arquivos gerados:**
+    Para remover os executáveis e arquivos temporários, use o comando:
 
-git clone <url-do-seu-repositorio>
-cd pagueveloz_challenge
-```
-Compile e execute os testes:
-O Makefile foi configurado para compilar todos os arquivos necessários e rodar os testes com um único comando:
+    ```bash
+    make clean
+    ```
+
+## Resultados Esperados
+
+Ao executar `make test`, a saída de todos os conjuntos de testes será exibida, confirmando que os módulos estão funcionando corretamente:
 
 ```bash
-
-make test
-```
-
-Limpe os arquivos gerados:
-Para remover os arquivos compilados e limpar o projeto, use o comando:
-
-```bash
-
-make clean
-```
-
-Resultados Esperados
-Ao executar o comando make test, a seguinte saída deve ser exibida no terminal. Isso confirma que o módulo de validação de Luhn está funcionando corretamente para todos os casos de teste definidos.
-
-``` bash
 Executando testes para o Algoritmo de Luhn...
   [PASSOU] Numero valido (49927398716)
   [PASSOU] Numero invalido (49927398717)
@@ -69,15 +69,26 @@ Executando testes para o Algoritmo de Luhn...
   [PASSOU] String vazia
   [PASSOU] Ponteiro nulo
 Todos os testes de Luhn passaram com sucesso!
+
+Executando testes de Persistencia Segura...
+  [PASSOU] Flash Write e Read
+  [PASSOU] Mascaramento de PAN
+  [PASSOU] Cifra XOR
+  [PASSOU] Gravacao e Leitura de Log Seguro
+Todos os testes de persistencia passaram com sucesso!
+
+Executando testes do Montador ISO 8583...
+  [PASSOU] Empacotamento de mensagem 0200
+Todos os testes de ISO 8583 passaram com sucesso!
+
 ```
 
-Próximos Passos
+## Próximos Passos
+
 O plano para os próximos dias inclui o desenvolvimento dos seguintes módulos:
 
-[ ] Implementar o módulo de persistência segura em memória flash simulada.
-
-[ ] Desenvolver o builder e o parser para mensagens no padrão ISO 8583.
-
-[ ] Criar a Máquina de Estados Finitos (FSM) para gerenciar o fluxo da transação.
-
-[ ] Integrar todos os módulos em uma aplicação de linha de comando (CLI) para demonstração.
+  - [x] Implementar o módulo de persistência segura em memória flash simulada.
+  - [x] Desenvolver o builder (montador) de mensagens ISO 8583.
+  - [ ] Desenvolver o parser (analisador) de mensagens ISO 8583.
+  - [ ] Criar a Máquina de Estados Finitos (FSM) para gerenciar o fluxo da transação.
+  - [ ] Integrar todos os módulos em uma aplicação de linha de comando (CLI) para demonstração.
