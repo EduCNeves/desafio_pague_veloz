@@ -33,18 +33,24 @@ void xor_cipher(uint8_t *data, uint32_t size)
     }
 }
 
-int write_secure_log(uint32_t log_address, const char *transaction_data)
-{
-    // Cria uma cópia local para poder modificar (cifrar)
-    char buffer[256]; // Buffer para o log
-    strncpy(buffer, transaction_data, sizeof(buffer) - 1);
-    buffer[sizeof(buffer) - 1] = '\0'; // Garante terminação nula
+int write_secure_log(uint32_t log_address, const char *transaction_data) {
+    uint32_t data_len = strlen(transaction_data);
+    if (data_len > 254) { // Garante que o tamanho cabe em um byte
+        return -1; // Log muito grande
+    }
 
-    uint32_t data_len = strlen(buffer);
+    // Buffer para [tamanho] + [dados]
+    uint8_t buffer[256];
+    
+    // O primeiro byte do buffer será o tamanho do log
+    buffer[0] = (uint8_t)data_len;
+    
+    // Copia os dados do log para o resto do buffer
+    memcpy(buffer + 1, transaction_data, data_len);
 
-    // Cifra o buffer
-    xor_cipher((uint8_t *)buffer, data_len);
+    // Cifra o buffer completo (tamanho + dados)
+    xor_cipher(buffer, data_len + 1);
 
     // Escreve na memória flash
-    return flash_write(log_address, (const uint8_t *)buffer, data_len);
+    return flash_write(log_address, buffer, data_len + 1);
 }

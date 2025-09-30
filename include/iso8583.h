@@ -51,4 +51,7 @@ int iso8583_pack(const Iso8583Message *msg, uint8_t *buffer);
  */
 void iso8583_free_message(Iso8583Message *msg);
 
+// Adicione esta linha no final do arquivo, antes do #endif
+int iso8583_unpack(const uint8_t *buffer, int len, Iso8583Message *msg);
+
 #endif // ISO8583_H

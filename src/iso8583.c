@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Tabela com os tamanhos fixos dos campos
+static const int FIELD_LENGTHS[MAX_FIELDS + 1] = {
+    // 0-1 não usados
+    [2] = 16, [3] = 6, [4] = 12, [7] = 10, [11] = 6, [12] = 6, 
+    [37] = 12, [41] = 8, [49] = 3, [128] = 16
+};
+
 // Função auxiliar para gerar o bitmap
 static void generate_bitmap(const Iso8583Message *msg, uint8_t *bitmap)
 {
@@ -100,4 +107,47 @@ void iso8583_free_message(Iso8583Message *msg)
             msg->fields[i] = NULL;
         }
     }
+}
+
+static bool is_bit_set(const uint8_t* bitmap, int field_index) {
+    int byte_index = (field_index - 1) / 8;
+    int bit_index = (field_index - 1) % 8;
+    return (bitmap[byte_index] & (1 << (7 - bit_index))) != 0;
+}
+
+// Função para converter string hexadecimal para bytes (para ler o bitmap)
+static void hex_to_bytes(const char* hex_str, uint8_t* byte_array, int hex_len) {
+    for (int i = 0; i < hex_len / 2; i++) {
+        sscanf(hex_str + 2 * i, "%2hhx", &byte_array[i]);
+    }
+}
+
+int iso8583_unpack(const uint8_t *buffer, int len, Iso8583Message *msg) {
+    iso8583_init_message(msg);
+    int offset = 0;
+
+    // 1. MTI (4 bytes)
+    strncpy(msg->mti, (const char*)buffer, 4);
+    msg->mti[4] = '\0';
+    offset += 4;
+
+    // 2. Bitmap (32 bytes em hexadecimal)
+    uint8_t bitmap[16];
+    hex_to_bytes((const char*)(buffer + offset), bitmap, 32);
+    offset += 32;
+
+    // 3. Campos de Dados
+    for (int i = 2; i <= MAX_FIELDS; i++) {
+        if (is_bit_set(bitmap, i)) {
+            int field_len = FIELD_LENGTHS[i];
+            if (offset + field_len > len) return -1; // Erro, buffer curto
+
+            char fieldValue[512] = {0};
+            strncpy(fieldValue, (const char*)(buffer + offset), field_len);
+            iso8583_set_field(msg, i, fieldValue);
+            
+            offset += field_len;
+        }
+    }
+    return offset;
 }

@@ -1,0 +1,14 @@
+@startuml
+[*] --> IDLE
+
+IDLE --> CARD_INSERTED : on_card_insert
+CARD_INSERTED --> ISO_SENT : on_pin_ok
+ISO_SENT --> WAITING_RESPONSE : on_send_success
+WAITING_RESPONSE --> APPROVED : on_response_approved
+WAITING_RESPONSE --> DECLINED : on_response_declined
+WAITING_RESPONSE --> IDLE : on_timeout
+
+APPROVED --> IDLE : on_finish_transaction
+DECLINED --> IDLE : on_finish_transaction
+
+@enduml
