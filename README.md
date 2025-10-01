@@ -2,8 +2,6 @@
 
 Este repositório contém a implementação do desafio técnico proposto pela PagueVeloz. O objetivo foi construir uma biblioteca em C simulando as funcionalidades essenciais de um terminal POS (Point of Sale), incluindo processamento de mensagens ISO 8583, validação de cartão, fluxo de transação e persistência segura.
 
-**Status do Projeto:** ✅ Concluído. ✅
-
 ## Funcionalidades Implementadas
 
 * **Módulo de Validação (Algoritmo de Luhn):** Função para validar números de cartão contra erros de digitação.
@@ -18,7 +16,7 @@ Este repositório contém a implementação do desafio técnico proposto pela Pa
 
 ## Cobertura de Testes
 
-O projeto utiliza um conjunto de testes unitários para cada módulo. A cobertura de código, gerada com `gcov` e `lcov`, atinge **XX.X%** (substitua pelo seu valor), cumprindo o requisito de >80%.
+O projeto utiliza um conjunto de testes unitários para cada módulo. A cobertura de código, gerada com `gcov` e `lcov`, atinge **93.2%** (substitua pelo seu valor), cumprindo o requisito de >80%.
 
 Para gerar o relatório localmente, execute `make coverage` e abra o arquivo `coverage_report/index.html`.
 

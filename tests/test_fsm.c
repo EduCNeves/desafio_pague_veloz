@@ -7,7 +7,6 @@ int main() {
 
     printf("Executando testes da Maquina de Estados (FSM)...\n\n");
 
-    // --- Cenário 1: Teste do fluxo de transação APROVADA ---
     printf("--- Iniciando teste de fluxo APROVADO ---\n");
     fsm_init(&fsm);
     assert(fsm.current_state == FSM_STATE_IDLE);
@@ -29,7 +28,6 @@ int main() {
     printf("--- Teste de fluxo APROVADO passou com sucesso ---\n\n");
 
 
-    // --- Cenário 2: Teste do fluxo com TIMEOUT ---
     printf("--- Iniciando teste de fluxo com TIMEOUT ---\n");
     fsm_init(&fsm);
     assert(fsm.current_state == FSM_STATE_IDLE);
@@ -39,7 +37,6 @@ int main() {
     fsm_handle_event(&fsm, FSM_EVENT_SEND_SUCCESS);
     assert(fsm.current_state == FSM_STATE_WAITING_RESPONSE);
 
-    // Agora, em vez de uma resposta, ocorre um timeout
     fsm_handle_event(&fsm, FSM_EVENT_TIMEOUT);
     assert(fsm.current_state == FSM_STATE_REVERSAL);
 

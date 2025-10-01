@@ -1,0 +1,4 @@
+Summary coverage rate:
+  lines......: 93.2% (179 of 192 lines)
+  functions..: 100.0% (18 of 18 functions)
+  branches...: no data found

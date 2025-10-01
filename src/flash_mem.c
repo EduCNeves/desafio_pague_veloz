@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 
-// O nome do arquivo que vai simular nosso chip de memória flash
+// O nome do arquivo que vai simular chip de memória flash
 #define FLASH_FILE_NAME "virtual_flash.bin"
 
 void flash_init(void) {
-    FILE *file = fopen(FLASH_FILE_NAME, "wb"); // Abre em modo de escrita binária, criando/truncando o arquivo
+    FILE *file = fopen(FLASH_FILE_NAME, "wb");
     if (file == NULL) {
         perror("Erro ao inicializar a memoria flash");
         return;

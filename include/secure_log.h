@@ -5,7 +5,6 @@
 
 /**
  * @brief Mascara um número de PAN (Primary Account Number).
- * Ex: "1234567890123456" -> "123456******3456"
  * @param pan O PAN original.
  * @param masked_pan O buffer onde o PAN mascarado será salvo. Deve ter tamanho suficiente.
  */

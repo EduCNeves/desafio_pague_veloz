@@ -1,9 +1,9 @@
 #ifndef FLASH_MEM_H
 #define FLASH_MEM_H
 
-#include <stdint.h> // Para usar tipos como uint8_t, uint32_t
+#include <stdint.h>
 
-// Tamanho da nossa memória flash virtual, conforme especificado
+// Tamanho da memória flash virtual
 #define FLASH_SIZE 4096
 
 /**

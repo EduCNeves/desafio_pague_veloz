@@ -5,19 +5,16 @@
 #include <stdint.h>
 
 
-// Define o número máximo de campos no padrão ISO 8583
+//número máximo de campos no padrão ISO 8583
 #define MAX_FIELDS 128
 
 // Estrutura para armazenar os dados de uma mensagem ISO 8583
 typedef struct
 {
-    char mti[5]; // Message Type Indicator (ex: "0200")
+    char mti[5];
 
-    // Armazena os campos de dados. Usamos ponteiros para flexibilidade.
-    // Em uma implementação real, poderiam ser de tamanho fixo para evitar alocação dinâmica.
     char *fields[MAX_FIELDS + 1];
 
-    // Controle para saber quais campos foram definidos
     bool is_field_set[MAX_FIELDS + 1];
 
 } Iso8583Message;
@@ -51,7 +48,6 @@ int iso8583_pack(const Iso8583Message *msg, uint8_t *buffer);
  */
 void iso8583_free_message(Iso8583Message *msg);
 
-// Adicione esta linha no final do arquivo, antes do #endif
 int iso8583_unpack(const uint8_t *buffer, int len, Iso8583Message *msg);
 
 #endif // ISO8583_H

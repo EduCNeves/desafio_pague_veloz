@@ -1,5 +1,5 @@
 #include "fsm.h"
-#include <stdio.h> // Para printf (debug)
+#include <stdio.h>
 
 void fsm_init(FSM *fsm) {
     fsm->current_state = FSM_STATE_IDLE;
@@ -7,7 +7,6 @@ void fsm_init(FSM *fsm) {
     printf("FSM: Inicializada. Estado atual: %s\n", fsm_state_to_string(fsm->current_state));
 }
 
-// A função principal que controla o fluxo
 void fsm_handle_event(FSM *fsm, TransactionEvent event) {
     TransactionState next_state = fsm->current_state;
 
@@ -21,7 +20,6 @@ void fsm_handle_event(FSM *fsm, TransactionEvent event) {
 
         case FSM_STATE_CARD_INSERTED:
             if (event == FSM_EVENT_PIN_OK) {
-                // Aqui seria o ponto para chamar o nosso montador ISO 8583
                 printf("FSM: PIN OK. Montando mensagem ISO...\n");
                 next_state = FSM_STATE_ISO_SENT;
             }
@@ -29,7 +27,6 @@ void fsm_handle_event(FSM *fsm, TransactionEvent event) {
 
         case FSM_STATE_ISO_SENT:
             if (event == FSM_EVENT_SEND_SUCCESS) {
-                // A mensagem foi enviada, agora esperamos a resposta
                 next_state = FSM_STATE_WAITING_RESPONSE;
             }
             break;
@@ -40,7 +37,6 @@ void fsm_handle_event(FSM *fsm, TransactionEvent event) {
             } else if (event == FSM_EVENT_RESPONSE_RECEIVED_DECLINED) {
                 next_state = FSM_STATE_DECLINED;
             } else if (event == FSM_EVENT_TIMEOUT) {
-                // Lógica de reverso por time-out
                 printf("FSM: TIMEOUT! Iniciando reverso...\n");
                 next_state = FSM_STATE_REVERSAL;
             }
@@ -50,7 +46,6 @@ void fsm_handle_event(FSM *fsm, TransactionEvent event) {
         case FSM_STATE_DECLINED:
         case FSM_STATE_REVERSAL:
             if (event == FSM_EVENT_FINISH_TRANSACTION) {
-                // Transação finalizada, volta ao estado ocioso
                 next_state = FSM_STATE_IDLE;
             }
             break;

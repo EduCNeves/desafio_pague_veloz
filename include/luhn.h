@@ -1,7 +1,6 @@
 #ifndef LUHN_H
 #define LUHN_H
 
-// Inclui a biblioteca para usar 'bool'
 #include <stdbool.h>
 
 /**

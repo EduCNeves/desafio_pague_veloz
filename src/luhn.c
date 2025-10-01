@@ -31,7 +31,7 @@ bool luhn_validate(const char *pan)
             digit *= 2;
             if (digit > 9)
             {
-                digit -= 9; // Equivalente a somar os dois dígitos (ex: 16 -> 1+6=7, 16-9=7)
+                digit -= 9; // Equivalente a somar os dois dígitos
             }
         }
 
@@ -39,6 +39,5 @@ bool luhn_validate(const char *pan)
         n_digits++;
     }
 
-    // O número de dígitos deve ser maior que 1 e a soma deve ser divisível por 10
     return (n_digits > 1) && (sum % 10 == 0);
 }

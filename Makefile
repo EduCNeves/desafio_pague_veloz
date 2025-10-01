@@ -11,7 +11,7 @@ TEST_DIR = tests
 BIN_DIR = bin
 
 # Arquivos fonte da biblioteca
-LIB_SRCS = $(SRC_DIR)/luhn.c $(SRC_DIR)/flash_mem.c $(SRC_DIR)/secure_log.c $(SRC_DIR)/iso8s583.c $(SRC_DIR)/fsm.c
+LIB_SRCS = $(SRC_DIR)/luhn.c $(SRC_DIR)/flash_mem.c $(SRC_DIR)/secure_log.c $(SRC_DIR)/iso8583.c $(SRC_DIR)/fsm.c
 
 # Executável final
 APP_EXEC = $(BIN_DIR)/pagueveloz_cli
@@ -33,12 +33,18 @@ coverage:
 	@echo "Gerando relatorio de cobertura..."
 	# Compila e roda os testes com as flags de cobertura
 	$(MAKE) CFLAGS="$(CFLAGS) $(COVERAGE_FLAGS)" LDFLAGS="$(COVERAGE_FLAGS)" test_all
-	# Limpa dados de cobertura antigos e gera o novo
+	# Captura os dados de cobertura
 	lcov --capture --directory . --output-file coverage.info
-	lcov --remove coverage.info '*/tests/*' --output-file coverage.info # Remove arquivos de teste do relatório
+	# Remove os arquivos de teste do relatório
+	lcov --remove coverage.info '*/tests/*' --output-file coverage.info
+	# Gera o relatório HTML completo
 	genhtml coverage.info --output-directory coverage_report
-	@echo "Relatorio de cobertura gerado em: coverage_report/index.html"
-
+	@echo "Relatorio de cobertura TXT"
+	# --- LINHAS NOVAS ABAIXO ---
+	# Gera um resumo simples em um arquivo de texto
+	@echo "Gerando resumo em formato de texto..."
+	@lcov --summary coverage.info > coverage_summary.txt
+	@echo "Resumo em texto gerado em: coverage_summary.txt"
 # --- REGRAS DE TESTE E LIMPEZA ---
 
 # Roda todos os executáveis de teste
@@ -51,10 +57,7 @@ test_all: bin/test_luhn bin/test_persistence bin/test_iso8583 bin/test_fsm
 clean:
 	rm -rf $(BIN_DIR) *.gcda *.gcno coverage.info coverage_report
 
-
-#
 # --- REGRAS DE TESTE (AUXILIARES) ---
-#
 test_luhn: bin/test_luhn
 bin/test_luhn: $(SRC_DIR)/luhn.c $(TEST_DIR)/test_luhn.c
 	@mkdir -p $(BIN_DIR)
@@ -75,4 +78,4 @@ bin/test_fsm: $(SRC_DIR)/fsm.c $(TEST_DIR)/test_fsm.c
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
-.PHONY: app test clean
+.PHONY: app test coverage clean test_all

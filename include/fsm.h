@@ -28,7 +28,6 @@ typedef enum {
 // A estrutura que representa nossa Máquina de Estados
 typedef struct {
     TransactionState current_state;
-    // Poderíamos adicionar mais dados aqui, como o valor da transação, STAN, etc.
     uint32_t stan; // Systems Trace Audit Number
 } FSM;
 
