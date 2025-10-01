@@ -7,7 +7,7 @@ Este repositório contém a implementação do desafio técnico proposto pela Pa
 * **Módulo de Validação (Algoritmo de Luhn):** Função para validar números de cartão contra erros de digitação.
 * **Módulo de Persistência Segura:** Simulação de uma memória flash de 4 KB persistida em um arquivo (`virtual_flash.bin`), com funções para mascaramento de PAN e cifragem XOR dos logs.
 * **Módulo de Mensagens ISO 8583:**
-    * **Builder:** Converte dados de uma transação em uma mensagem ISO 8583 (MTI 0200) formatada, incluindo a geração de bitmap primário e secundário.
+    * **Builder:** Converte dados de uma transação em uma mensagem ISO 8583 formatada, incluindo a geração de bitmap primário e secundário.
     * **Parser:** Interpreta um buffer de mensagem ISO 8583, extraindo o MTI, o bitmap e todos os campos de dados.
 * **Máquina de Estados (FSM):** Gerencia todo o fluxo da transação, desde o estado ocioso até a aprovação/recusa, incluindo a lógica de reverso por time-out.
 * **Aplicação CLI:** Um executável de linha de comando (`pagueveloz_cli`) com dois modos:
@@ -54,4 +54,5 @@ make coverage
 # Para limpar todos os arquivos gerados
 
 make clean
+
 
