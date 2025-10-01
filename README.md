@@ -24,7 +24,7 @@ Para gerar o relatório localmente, execute `make coverage` e abra o arquivo `co
 
 O fluxo da transação é controlado pela seguinte Máquina de Estados:
 
-![Diagrama da FSM](docs/diagram.png)
+![Diagrama da FSM](docs/diagrama.png)
 
 ## Como Compilar e Executar
 
@@ -54,3 +54,4 @@ make coverage
 # Para limpar todos os arquivos gerados
 
 make clean
+
