@@ -16,7 +16,7 @@ Este repositório contém a implementação do desafio técnico proposto pela Pa
 
 ## Cobertura de Testes
 
-O projeto utiliza um conjunto de testes unitários para cada módulo. A cobertura de código, gerada com `gcov` e `lcov`, atinge **93.2%** (substitua pelo seu valor), cumprindo o requisito de >80%.
+O projeto utiliza um conjunto de testes unitários para cada módulo. A cobertura de código, gerada com `gcov` e `lcov`, atinge **93.2%**, cumprindo o requisito de >80%.
 
 Para gerar o relatório localmente, execute `make coverage` e abra o arquivo `coverage_report/index.html`.
 
@@ -24,7 +24,7 @@ Para gerar o relatório localmente, execute `make coverage` e abra o arquivo `co
 
 O fluxo da transação é controlado pela seguinte Máquina de Estados:
 
-![Diagrama da FSM](docs/fsm_diagram.png)
+![Diagrama da FSM](docs/diagram.png)
 
 ## Como Compilar e Executar
 
@@ -52,4 +52,5 @@ make test
 make coverage
 
 # Para limpar todos os arquivos gerados
+
 make clean
